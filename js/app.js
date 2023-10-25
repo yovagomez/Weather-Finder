@@ -1,28 +1,33 @@
+// Estos const son seleccionados desde el css/tailwind.min.css para ser motificados en este archivo
 const container = document.querySelector('.container');
 const resultado = document.querySelector('#resultado');
 const formulario = document.querySelector('#formulario');
 
+// Ejecuta un evento cada vez que se presiona el boton de buscar clima, el cual se encarga de buscar el clima
 window.addEventListener('load', () => {
     formulario.addEventListener('submit', buscarClima);
 })
 
+// Es la función encargada de realizar la lógica para buscar el clima
 function buscarClima (e) {
     e.preventDefault();
     
     // Validar
-    const ciudad = document.querySelector('#ciudad').value;
-    const pais = document.querySelector('#pais').value;
+    const ciudad = document.querySelector('#ciudad').value; // Captura el valor  insertado en el campo "Ciudad"
+    const pais = document.querySelector('#pais').value; // Captura el valor insertado en el canpo "Pais"
 
-    if(ciudad === '' || pais === ''){
+    // Validación de su ambos campos estan llenos 
+    if(ciudad === '' || pais === ''){ 
         // there was a mistake
-        mostrarError('Ambos campos son obligatorios');
+        mostrarError('Ambos campos son obligatorios'); // Llama a la función "mostrarError" y se envia como paránetro el mensaje de error
         return;
     }
 
     //consultariamos la API
-    consultarAPI(ciudad, pais);
+    consultarAPI(ciudad, pais); // Llama a la función "consultarAPI" y le envía por parámetros la cuidad y país
 }
 
+// En caso de que los campos de ciudad y país esten vacíos, se ejecuta esta función
 function mostrarError(mensaje) {
     const alerta = document.querySelector('.bg-red-100');
 
@@ -43,30 +48,34 @@ function mostrarError(mensaje) {
     
 }
 
+// Función que se encarga de convertir de Kelvin a Centigrados
 function kelvinACentigrados(grados) {
     return parseInt(grados - 273.15);
 }
 
+// Esta es la función encarga de consumir la API donde se obtiene el clima
 function consultarAPI (ciudad, pais) {
-    const appId = 'aaf61516cc3dd72f5855752ba2e2c139';
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${appId}`;
+    const appId = 'aaf61516cc3dd72f5855752ba2e2c139'; // La API necesita que por medio de la URL se le envíe un id como parámetro
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${appId}`; // La URL a la cual se le hace la consulta con los parámetros requeridos
 
     Spinner(); // Show a charger spinner
 
+    // Se realiza la consulta oficial por medio del 'fetch'
     fetch(url)
-        .then(respuesta => respuesta.json())
-        .then(datos => {
+        .then(respuesta => respuesta.json()) // Recibe la respuesta en formato json
+        .then(datos => { 
             limpiarHTML(); //Clean HTML
-            if(datos.cod === "404"){
-                mostrarError('Ciudad no encontrada');
+            if(datos.cod === "404"){ // Manejo de errores en caso de que la ciudad no exista
+                mostrarError('Ciudad no encontrada'); // Llama a la función mostrar error y se le pasa como parámetro el mensaje 
                 return;
             }
 
             //Print the HTML answer
-            mostrarClima(datos);
+            mostrarClima(datos); // Se llama a la función mostrarClima con los datos substraidos de la consulta  como parámetro
         })
 }
 
+// Función que se encarga de pintar en pantalla los resultados que fueron consumidos de la API
 function mostrarClima(datos){
     const { name, main: { temp, temp_max, temp_min } } = datos;
     const centigrados = kelvinACentigrados(temp);
@@ -100,6 +109,7 @@ function mostrarClima(datos){
     resultado.appendChild(resultadoDiv);
 }
 
+// Se encarga de limpiar el HTML, cada vez que se presiona el botón "Obtener Clima" esta función elimina los campos llenos y resultados de la consulta anterior, en caso de que hayan
 function limpiarHTML() {
     while(resultado.firstChild) {
         resultado.removeChild(resultado.firstChild);
