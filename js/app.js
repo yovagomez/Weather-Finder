@@ -2,6 +2,7 @@
 const container = document.querySelector('.container');
 const resultado = document.querySelector('#resultado');
 const formulario = document.querySelector('#formulario');
+const btnGuardar = document.querySelector('#btnGuardar');
 
 // Ejecuta un evento cada vez que se presiona el boton de buscar clima, el cual se encarga de buscar el clima
 window.addEventListener('load', () => {
@@ -11,7 +12,7 @@ window.addEventListener('load', () => {
 // Es la función encargada de realizar la lógica para buscar el clima
 function buscarClima (e) {
     e.preventDefault();
-    
+    console.log(e);
     // Validar
     const ciudad = document.querySelector('#ciudad').value; // Captura el valor  insertado en el campo "Ciudad"
     const pais = document.querySelector('#pais').value; // Captura el valor insertado en el canpo "Pais"
@@ -107,6 +108,21 @@ function mostrarClima(datos){
 
 
     resultado.appendChild(resultadoDiv);
+
+    // Mostrar botón Guardar
+    const botonGuardar = document.createElement('input');
+    botonGuardar.classList.add('mt-5', 'w-full', 'bg-orange-500', 'p-3',  'uppercase', 'font-bold', 'cursor-pointer', 'rounded');
+    botonGuardar.type = "button";
+    botonGuardar.value = "Guardar Clima";
+    botonGuardar.onclick = function() {
+        GuardarClima(kelvinACentigrados(temp));
+    }
+
+    btnGuardar.appendChild(botonGuardar);
+}
+
+function GuardarClima (temp) {
+    console.log(temp);
 }
 
 // Se encarga de limpiar el HTML, cada vez que se presiona el botón "Obtener Clima" esta función elimina los campos llenos y resultados de la consulta anterior, en caso de que hayan
