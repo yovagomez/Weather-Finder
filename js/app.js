@@ -122,7 +122,9 @@ function mostrarClima(datos){
 }
 
 function GuardarClima (temp) {
-    console.log(temp);
+    const ciudad = document.querySelector('#ciudad').value; // Captura el valor  insertado en el campo "Ciudad"
+    const pais = document.querySelector('#pais').value;
+    console.log(`${pais}, ${ciudad}, ${temp}`);
 }
 
 // Se encarga de limpiar el HTML, cada vez que se presiona el botón "Obtener Clima" esta función elimina los campos llenos y resultados de la consulta anterior, en caso de que hayan
