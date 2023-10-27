@@ -1,3 +1,10 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+}
+
 html {
     background: #43cea2;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #185a9d, #43cea2);  /* Chrome 10-25, Safari 5.1-6 */
@@ -5,6 +12,43 @@ html {
     
 }
 
+.header{
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 85px;
+  padding: 5px 10%;
+}
+
+.header .nav-links li {
+  display: inline-block;
+  padding: 0 20px;
+} 
+
+.header .nav-links li:hover{
+  transform: scale(1.1);
+
+}
+
+.header .nav-links a{
+  font-weight: 700;
+  color: #00497C;
+  padding: 9px 25px;
+  background: #eceff1;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+.header .nav-links a:hover{
+   background-color: #e2f1f8;
+   color: #ffbc0e;
+   transform: scale(1.1);
+  /* border-bottom-width: 2px;
+  border-bottom-color: #001A35; */
+}
 
 .sk-fading-circle {
     margin: 100px auto;
